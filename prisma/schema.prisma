@@ -1,0 +1,43 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Team {
+  id       Int      @id @default(autoincrement())
+  name     String
+  nickname String
+  code     String
+  city     String
+  logo     String
+  player   player[]
+
+  @@map("team")
+}
+
+model player {
+  id                Int     @id @default(autoincrement())
+  firstname         String
+  lastname          String
+  birth             String?
+  country           String
+  start             Int
+  yearPro           Int
+  heightsInInches   Int
+  heightsInMeters   Int
+  weightInPounds    Int
+  weightInKilograms Int
+  team              Team    @relation(fields: [teamId], references: [id])
+  teamId            Int
+  college           String
+  jersey            Int
+  active            Boolean
+  affiliation       String
+  position          String
+
+  @@map("player")
+}
